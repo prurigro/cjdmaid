@@ -18,61 +18,61 @@
 "use strict";
 
 module.exports = function(grunt) {
-	// Project configuration.
+    // Project configuration.
+    grunt.initConfig({
+        pkg: grunt.file.readJSON("package.json"),
 
-	grunt.initConfig({
-		pkg: grunt.file.readJSON("package.json"),
+        jshint: {
+            options: grunt.file.readJSON(".jshintrc"),
 
-		jshint: {
-			options: grunt.file.readJSON(".jshintrc"),
+            bin: {
+                src: ["bin/*"]
+            },
 
-			bin: {
-				src: ["bin/*"]
-			},
+            lib: {
+                src: ["lib/**/*.js"]
+            },
 
-			lib: {
-				src: ["lib/**/*.js"]
-			},
+            test: {
+                options: {
+                    globals: {
+                        describe: false,
+                        it: false,
+                        before: false,
+                        after: false,
+                        beforeEach: false,
+                        afterEach: false
+                    }
+                },
+                src: ["test/**/*.js"]
+            },
 
-			test: {
-				options: {
-					globals: {
-						describe: false,
-						it: false,
-						before: false,
-						after: false,
-						beforeEach: false,
-						afterEach: false
-					}
-				},
-				src: ["test/**/*.js"]
-			},
+            other: {
+                src: ["install.js", "Gruntfile.js"]
+            }
+        },
 
-			other: {
-				src: ["install.js", "Gruntfile.js"]
-			}
-		},
+        simplemocha: {
+            options: {
+                globals: [],
+                timeout: 3000,
+                ignoreLeaks: false,
+                ui: "bdd",
+                reporter: grunt.option("no-color") ? "tap" : "spec"
+            },
 
-		simplemocha: {
-			options: {
-				globals: [],
-				timeout: 3000,
-				ignoreLeaks: false,
-				ui: "bdd",
-				reporter: grunt.option("no-color") ? "tap" : "spec"
-			},
+            all: {
+                src: ["test/**/*.js"]
+            }
+        }
+    });
 
-			all: {
-				src: ["test/**/*.js"]
-			}
-		}
-	});
+    // Load the plugin that provides the "uglify" task.
+    grunt.loadNpmTasks("grunt-contrib-jshint");
+    grunt.loadNpmTasks("grunt-simple-mocha");
 
-	// Load the plugin that provides the "uglify" task.
-	grunt.loadNpmTasks("grunt-contrib-jshint");
-	grunt.loadNpmTasks("grunt-simple-mocha");
-
-	// Default task(s).
-	grunt.registerTask("default", ["jshint", "simplemocha"]);
+    // Default task(s).
+    grunt.registerTask("default", ["jshint", "simplemocha"]);
 
 };
+

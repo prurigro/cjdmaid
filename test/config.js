@@ -17,104 +17,95 @@
 
 "use strict";
 
-var when    = require("when");
-var assert  = require("assert");
+var when = require("when");
+var assert = require("assert");
 
 var config = require(__dirname + "/../lib/config");
 
 
-describe("config", function () {
-	describe("#readJson()", function () {
-		it("should return json", function (done) {
-			var exampleJson = {"key": "val", "arr": [1, 2, 3]};
-			when(
-				config.readJson(__dirname + "/example.json")
-			)
-			.then(function (data) {
-				assert.deepEqual(data, exampleJson);
-				done();
-			});
-		});
-	});
+describe("config", function() {
+    describe("#readJson()", function() {
+        it("should return json", function(done) {
+            var exampleJson = {
+                "key": "val",
+                "arr": [1, 2, 3]
+            };
+            when(
+            config.readJson(__dirname + "/example.json")).then(function(data) {
+                assert.deepEqual(data, exampleJson);
+                done();
+            });
+        });
+    });
 
-	describe("#readCjdmaidConf()", function () {
-		it("should return something", function (done) {
-			when(
-				config.readCjdmaidConf()
-			)
-			.then(function (data) {
-				assert.ok(data);
-				done();
-			});
-		});
-	});
+    describe("#readCjdmaidConf()", function() {
+        it("should return something", function(done) {
+            when(
+            config.readCjdmaidConf()).then(function(data) {
+                assert.ok(data);
+                done();
+            });
+        });
+    });
 
-	describe("#readCustomConf()", function () {
-		it("cjdrouteConf should return something", function (done) {
-			when(
-				config.readCustomConf("cjdrouteConf")
-			)
-			.then(function (data) {
-				assert.ok(data);
-				done();
-			});
-		});
+    describe("#readCustomConf()", function() {
+        it("cjdrouteConf should return something", function(done) {
+            when(
+            config.readCustomConf("cjdrouteConf")).then(function(data) {
+                assert.ok(data);
+                done();
+            });
+        });
 
-		it("cjdmaidConf should be same as readCjdmaidConf()", function (done) {
-			var readCjdmaidConfResult;
-			var readCustomConfResult;
+        it("cjdmaidConf should be same as readCjdmaidConf()", function(done) {
+            var readCjdmaidConfResult;
+            var readCustomConfResult;
 
-			when(
-				config.readCjdmaidConf()
-			)
-			.then(function (data) {
-				readCjdmaidConfResult = data;
-				return config.readCustomConf("cjdmaidConf");
-			})
-			.then(function (data) {
-				readCustomConfResult = data;
-				assert.deepEqual(readCjdmaidConfResult, readCustomConfResult);
-				done();
-			});
-		});
-	});
+            when(
+            config.readCjdmaidConf()).then(function(data) {
+                readCjdmaidConfResult = data;
+                return config.readCustomConf("cjdmaidConf");
+            }).then(function(data) {
+                readCustomConfResult = data;
+                assert.deepEqual(readCjdmaidConfResult, readCustomConfResult);
+                done();
+            });
+        });
+    });
 
-	describe("#readSeveralConfs()", function () {
-		it("cjdrouteConf, cjdmaidConf should be as analogs", function (done) {
-			var regularResults = [];
+    describe("#readSeveralConfs()", function() {
+        it("cjdrouteConf, cjdmaidConf should be as analogs", function(done) {
+            var regularResults = [];
 
-			when(
-				config.readCustomConf("cjdmaidConf")
-			)
-			.then(function (data) {
-				regularResults.push(data);
-				return config.readCustomConf("cjdrouteConf");
-			})
-			.then(function (data) {
-				regularResults.push(data);
-				return config.readSeveralConfs("cjdmaidConf", "cjdrouteConf");
-			})
-			.then(function (data) {
-				assert.deepEqual(regularResults, data);
-				done();
-			});
-		});
-	});
+            when(
+            config.readCustomConf("cjdmaidConf")).then(function(data) {
+                regularResults.push(data);
+                return config.readCustomConf("cjdrouteConf");
+            }).then(function(data) {
+                regularResults.push(data);
+                return config.readSeveralConfs("cjdmaidConf", "cjdrouteConf");
+            }).then(function(data) {
+                assert.deepEqual(regularResults, data);
+                done();
+            });
+        });
+    });
 
 
-	describe("#writeJson()", function () {
-		it("should write json correct", function (done) {
-			var exampleJson = {"key": "val", "arr": [1, 2, 3]};
-			when(
-				config.writeJson(__dirname + "/writing.json", exampleJson)
-			)
-			.then(function () {
-				return config.readJson(__dirname + "/writing.json");
-			})
-			.then(function (data) {
-				assert.deepEqual(data, exampleJson);
-				done();
-			});
-		});
-	});
+    describe("#writeJson()", function() {
+        it("should write json correct", function(done) {
+            var exampleJson = {
+                "key": "val",
+                "arr": [1, 2, 3]
+            };
+            when(
+            config.writeJson(__dirname + "/writing.json", exampleJson)).then(function() {
+                return config.readJson(__dirname + "/writing.json");
+            }).then(function(data) {
+                assert.deepEqual(data, exampleJson);
+                done();
+            });
+        });
+    });
 });
+
