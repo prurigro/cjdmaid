@@ -1,4 +1,4 @@
-# cjdmaid - cjdns peer manager - config@home (fork)
+# CJDMAID: cjdns peer manager (config@home fork)
 
                                      __,,_,,..,.
                                ..---\     /   /
