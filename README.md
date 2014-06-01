@@ -25,7 +25,7 @@
                                             ''
 ## Description ##
 
-A tool to configure _cjdroute.conf_ while also applying its changes to a running instance of _cjdroute_ on the fly using the admin port.
+A tool to simultaneously manage peers by editing _cjdroute.conf_ and updating the active _cjdroute_ process through the use of the admin port.
 
 The *config@home* fork of *cjdmaid* is primarily the *cjdmaid* config file location change from _/etc/cjdmaid.conf_ to _~/.config/cjdmaid.conf_.
 
