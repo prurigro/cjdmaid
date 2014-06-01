@@ -1,4 +1,4 @@
-# cjdmaid (configure@home) - cjdns peers management script #
+# cjdmaid - cjdns peer manager - config@home (fork)
 
                                      __,,_,,..,.
                                ..---\     /   /
@@ -27,7 +27,7 @@
 
 A tool to configure _cjdroute.conf_ while also applying its changes to a running instance of _cjdroute_ on the fly using the admin port.
 
-The *configure@home* fork of *cjdmaid* is primarily the *cjdmaid* config file location change from _/etc/cjdmaid.conf_ to _~/.config/cjdmaid.conf_.
+The *config@home* fork of *cjdmaid* is primarily the *cjdmaid* config file location change from _/etc/cjdmaid.conf_ to _~/.config/cjdmaid.conf_.
 
 ## Features ##
 
@@ -121,6 +121,6 @@ The cjdmaid cjdns peer manager
 
     You should have received a copy of the GNU General Public License along with this program. If not, see [GNU GENERAL PUBLIC LICENSE Version 3](https://www.gnu.org/licenses/gpl.html).
 
-Changes made in the *configure@home* fork of *cjdmaid* are by Kevin MacMartin.
+Changes made in the *config@home* fork of *cjdmaid* are by Kevin MacMartin.
 
 The image of the ASCII art maid in this document is licensed under the [![Creative Commons License](http://i.creativecommons.org/l/by-sa/3.0/80x15.png "Creative Commons License")](http://creativecommons.org/licenses/by-sa/3.0/deed.en_US).
