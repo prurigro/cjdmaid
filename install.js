@@ -27,21 +27,20 @@ var util = require(__dirname + "/lib/util");
 var config = require(__dirname + "/lib/config");
 var commfn = require(__dirname + "/lib/commander/function");
 
-
 var cjdmaidConf = {
-    "cjdrouteConf": "Fill this: Path to your cjdroute.conf",
+    "cjdrouteConf": "/etc/cjdroute.conf",
     "cjdnsadminConf": "~/.cjdnsadmin",
     "passwordLength": 48,
     "ownNodeData": {
-        "name": "Optional: Your nickname",
-        "email": "Optional: Your email",
-        "location": "Optional: Your location",
-        "ip": "Optional: Enter your node external ip adress"
+        /* OPTIONAL */
+        "name": "Your Name",
+        "email": "your@address.com",
+        "location": "Some Place",
+        "ip": "555.555.55.5"
     }
 };
 
-when(
-commfn.call(fs.exists, fs, config.CJDMAID_CONFIG_PATH)).then(function(exists) {
+when(commfn.call(fs.exists, fs, config.CJDMAID_CONFIG_PATH)).then(function(exists) {
     if (exists) {
         console.log(config.CJDMAID_CONFIG_PATH + " already exists");
         return when(
@@ -76,8 +75,7 @@ commfn.call(fs.exists, fs, config.CJDMAID_CONFIG_PATH)).then(function(exists) {
 
     var writingText = JSONcomments.stringify(cjdmaidConf, null, "\t");
 
-    return when(
-    nodefn.call(fs.writeFile, config.CJDMAID_CONFIG_PATH, writingText)).then(function() {
+    return when(nodefn.call(fs.writeFile, config.CJDMAID_CONFIG_PATH, writingText)).then(function() {
         console.log(config.CJDMAID_CONFIG_PATH + " saved!");
     }).otherwise(function(err) {
         if (err) {
@@ -86,15 +84,14 @@ commfn.call(fs.exists, fs, config.CJDMAID_CONFIG_PATH)).then(function(exists) {
         }
     });
 }).then(function() {
-    var editor = process.env.EDITOR || "nano";
+    var editor = process.env.EDITOR || "vi";
 
     console.log("Editing " + config.CJDMAID_CONFIG_PATH + "...");
     var child = childProcess.spawn(editor, [config.CJDMAID_CONFIG_PATH], {
         stdio: "inherit"
     });
 
-    child.on("exit", function( /* code, signal */ ) {
-        console.log("User close editor!");
+    child.on("exit", function() {
         console.log("Now installed");
     });
 });
