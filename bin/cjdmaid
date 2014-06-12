@@ -14,36 +14,32 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 "use strict";
 
-var fs      = require("fs");
+var fs = require("fs");
 var program = require("commander");
 
-var license = require(__dirname + "/../lib/license");
-
-
 program
-	.version(require(__dirname + "/../package.json").version)
-	.command("addpass", "Add authorized password to config.")
-	.command("addpeer", "Add peer to your config.")
-	.command("outcon", "Add connection to outgoingConnections in config.")
-	.command("allowcon", "Add connection to allowedConnections in config.")
-	.command("admin", "Execute command in cjdns admin.")
-	.command("dumptable", "Dump whole routing table.")
-	.command("findnodes", "Prints new nodes in routing table.")
-	.command("ping", "Ping node.");
+    .version("cjdmaid v" + require(__dirname + "/../package.json").version)
+    .command("addpass", "Add authorized password to config")
+    .command("addpeer", "Add peer to your config")
+    .command("outcon", "Add connection to outgoingConnections in config")
+    .command("allowcon", "Add connection to allowedConnections in config")
+    .command("admin", "Execute command in cjdns admin")
+    .command("dumptable", "Dump whole routing table")
+    .command("findnodes", "Prints new nodes in routing table")
+    .command("ping", "Ping node")
+    .parse(process.argv);
 
 if (process.argv.length < 3) {
-	var ascii = fs.readFileSync(__dirname + "/../maid.txt", "utf-8");
-	process.stdout.write(ascii);
+    process.stdout.write("\n  cjdmaid v" + require(__dirname + "/../package.json").version + " - " + "Copyright (C) 2013 noway421\n");
+    var ascii = fs.readFileSync(__dirname + "/../maid.txt", "utf-8");
+    process.stdout.write(ascii);
+    process.stdout.write("  Licensed under the GPL3 (http://gnu.org/licenses/gpl.html)\n");
+    process.stdout.write("  There is NO WARRANTY, to the extent permitted by law\n");
+    program.outputHelp();
 }
 
-program.on("--help", function () {
-	license();
-});
-
-
-program.parse(process.argv);

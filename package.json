@@ -1,12 +1,12 @@
 {
-    "name": "cjdmaid-homeconfig",
+    "name": "cjdmaid",
     "version": "0.1.9",
     "author": "noway421 <noway@2ch.hk>",
-    "description": "Cjdns peer manager",
+    "description": "cjdns peer manager (home config fork)",
 
     "bugs": {
         "url": "https://github.com/prurigro/cjdmaid/issues",
-        "email": "noway@2ch.hk"
+        "email": "prurigro@gmail.com"
     },
 
     "license": "gpl-v3.0",

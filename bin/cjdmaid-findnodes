@@ -14,30 +14,22 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 /* jshint camelcase: false */
 
 "use strict";
 
-var when    = require("when");
+var when = require("when");
 var program = require("commander");
 var timeout = require("when/timeout");
 
-var util    = require(__dirname + "/../lib/util");
-var admin   = require(__dirname + "/../lib/admin");
-var config  = require(__dirname + "/../lib/config");
-var license = require(__dirname + "/../lib/license");
+var util = require(__dirname + "/../lib/util");
+var admin = require(__dirname + "/../lib/admin");
+var config = require(__dirname + "/../lib/config");
 
-
-program
-	.option("-s, --secs <number>", "Seconds to wait between fetches",
-		parseInt, 30);
-
-program.on("--help", function () {
-	license();
-});
+program.option("-s, --secs <number>", "Seconds to wait between fetches", parseInt, 30);
 
 var adminCopy = new admin();
 var session;
@@ -45,85 +37,70 @@ var programExit = when.defer();
 
 program.parse(process.argv);
 
-when(
-	config.readJson(util.expanduser("~/.cjdnsadmin"))
-)
-.then(function (data) {
-	return adminCopy.connect(data.addr, data.port, data.password);
-})
-.then(function (sess) {
-	session = sess;
-
-	findNodes();
-
-	process.on("SIGINT", function () {
-		programExit.reject();
-	});
-	return programExit.promise;
-})
-.otherwise(function (err) {
-	if (err) {
-		return util.panic(err);
-	}
-})
-.ensure(function () {
-	return session.disconnect();
+when(config.readJson(util.expanduser("~/.cjdnsadmin"))).then(function(data) {
+    return adminCopy.connect(data.addr, data.port, data.password);
+}).then(function(sess) {
+    session = sess;
+    findNodes();
+    process.on("SIGINT", function() {
+        programExit.reject();
+    });
+    return programExit.promise;
+}).otherwise(function(err) {
+    if (err) {
+        return util.panic(err);
+    }
+}).ensure(function() {
+    return session.disconnect();
 });
 
 var nodes = {};
 
 function findNodes() {
-	when(
-		getNewNodes(0, [])
-	)
-	.then(function (newNodes) {
-		for (var i = 0; i < newNodes.length; i++) {
-			console.log(newNodes[i]);
-		}
-		console.log(newNodes.length + " new nodes found");
-		console.log("Waiting " + program.secs + " seconds.");
-		return timeout(program.secs * 1000, programExit.promise);
-	})
-	.otherwise(function (err) {
-		if (!err) {
-			return when.reject(err);
-		}
-
-		if (err.message.substr(0, "timed out".length) === "timed out") {
-			return;
-		}
-		return when.reject(err);
-	})
-	.then(function () {
-		findNodes();
-	})
-	.otherwise(function (err) {
-		if (err) {
-			return util.panic(err);
-		}
-	});
+    when(
+    getNewNodes(0, [])).then(function(newNodes) {
+        for (var i = 0; i < newNodes.length; i++) {
+            console.log(newNodes[i]);
+        }
+        console.log(newNodes.length + " new nodes found");
+        console.log("Waiting " + program.secs + " seconds.");
+        return timeout(program.secs * 1000, programExit.promise);
+    }).otherwise(function(err) {
+        if (!err) {
+            return when.reject(err);
+        }
+        if (err.message.substr(0, "timed out".length) === "timed out") {
+            return;
+        }
+        return when.reject(err);
+    }).then(function() {
+        findNodes();
+    }).otherwise(function(err) {
+        if (err) {
+            return util.panic(err);
+        }
+    });
 }
 
 function getNewNodes(index, newNodes) {
-	return when(
-		session.NodeStore_dumpTable(index)
-	)
-	.then(function (data) {
-		if (!data.routingTable) {
-			console.log("got empty data");
-			console.log(data);
-			return [];
-		}
-		for (var i = 0; i < data.routingTable.length; i++) {
-			var r = data.routingTable[i];
-			if (!util.isDef(nodes[r.ip])) {
-				nodes[r.ip] = 1;
+    return when(
+    session.NodeStore_dumpTable(index)).then(function(data) {
+        if (!data.routingTable) {
+            console.log("got empty data");
+            console.log(data);
+            return [];
+        }
+        for (var i = 0; i < data.routingTable.length; i++) {
+            var r = data.routingTable[i];
+            if (!util.isDef(nodes[r.ip])) {
+                nodes[r.ip] = 1;
                 newNodes.push(r);
-			}
-		}
-		if (!util.isDef(data.more)) {
-			return newNodes;
-		}
-		return getNewNodes(index + 1, newNodes);
-	});
+            }
+        }
+        if (!util.isDef(data.more)) {
+            return newNodes;
+        }
+        return getNewNodes(index + 1, newNodes);
+    });
 }
+

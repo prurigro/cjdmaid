@@ -14,30 +14,27 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 "use strict";
 
-var when    = require("when");
+var when = require("when");
 var program = require("commander");
 
-var util    = require(__dirname + "/../lib/util");
-var admin   = require(__dirname + "/../lib/admin");
-var license = require(__dirname + "/../lib/license");
+var util = require(__dirname + "/../lib/util");
+var admin = require(__dirname + "/../lib/admin");
 
-
-program.on("--help", function () {
-	console.log("  Usage:");
-	console.log("");
-	console.log("    $ cjdmaid-admin <command> [options]");
-	console.log("");
-	console.log("  Examples:");
-	console.log("");
-	console.log("    $ cjdmaid-admin ping");
-	console.log("    $ cjdmaid-admin functions");
-	console.log("");
-	license();
+program.on("--help", function() {
+    console.log("  Usage:");
+    console.log("");
+    console.log("    $ cjdmaid-admin <command> [options]");
+    console.log("");
+    console.log("  Examples:");
+    console.log("");
+    console.log("    $ cjdmaid-admin ping");
+    console.log("    $ cjdmaid-admin functions");
+    console.log("");
 });
 
 program.parse(process.argv);
@@ -45,39 +42,34 @@ program.parse(process.argv);
 var adminCopy = new admin();
 var session;
 
-when(
-	adminCopy.connectWithAdminInfo()
-)
-.then(function (sess) {
-	session = sess;
-	var funcName = process.argv[2];
-	var args = process.argv.splice(3);
+when(adminCopy.connectWithAdminInfo()).then(function(sess) {
+    session = sess;
+    var funcName = process.argv[2];
+    var args = process.argv.splice(3);
 
-	if (!util.isDef(session.constructor.prototype[funcName])) {
-		console.log("No such function");
-		session.disconnect();
-		return when.reject();
-	}
+    if (!util.isDef(session.constructor.prototype[funcName])) {
+        console.log("No such function");
+        session.disconnect();
+        return when.reject();
+    }
 
-	return session[funcName].apply(session, args);
-})
-.then(function (data) {
-	console.log(data);
+    return session[funcName].apply(session, args);
+}).then(function(data) {
+    console.log(data);
 
-	if (util.isDef(data.streamId) && data.error === "none") {
-		var deferred = when.defer();
-		process.on("SIGINT", function () {
-			deferred.resolve();
-		});
-		return deferred.promise;
-	}
-	return;
-})
-.then(function () {
-	return session.disconnect();
-})
-.otherwise(function (err) {
-	if (err) {
-		return util.panic(err);
-	}
+    if (util.isDef(data.streamId) && data.error === "none") {
+        var deferred = when.defer();
+        process.on("SIGINT", function() {
+            deferred.resolve();
+        });
+        return deferred.promise;
+    }
+    return;
+}).then(function() {
+    return session.disconnect();
+}).otherwise(function(err) {
+    if (err) {
+        return util.panic(err);
+    }
 });
+
