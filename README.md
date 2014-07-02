@@ -1,4 +1,4 @@
-# CJDMAID: cjdns peer manager (config@home fork)
+# CJDMaid (home config fork) #
 
                                      __,,_,,..,.
                                ..---\     /   /
@@ -25,9 +25,9 @@
                                             ''
 ## Description ##
 
-A tool to simultaneously manage peers by editing _cjdroute.conf_ and updating the active _cjdroute_ process through the use of the admin port.
+A fork of the cjdns admin tool [cjdmaid](https://github.com/noway421/cjdmaid) that uses `~/.cjdmaid.conf` as its config file rather than `/etc/cjdmaid.conf`.
 
-The *config@home* fork of *cjdmaid* is primarily the *cjdmaid* config file location change from _/etc/cjdmaid.conf_ to _~/.config/cjdmaid.conf_.
+This tool is able to simultaneously manage peers in your _cjdroute.conf_ and the active process using the cjdroute admin port.
 
 ## Features ##
 
@@ -73,24 +73,24 @@ followed by:
 
 ## Commands ##
 
-    Usage: cjdmaid [options] [command]
+    Usage: `cjdmaid [options] [command]`
 
     Commands:
 
-        addpass         Add authorized password to config.
-        addpeer         Add peer to your config.
-        outcon          Add connection to outgoingConnections in config.
-        allowcon        Add connection to allowedConnections in config.
-        admin           Execute command in cjdns admin.
-        dumptable       Dump whole routing table.
-        findnodes       Prints new nodes in routing table.
-        ping            Ping node.
-        help [cmd]      display help for [cmd]
+        `addpass`         Add authorized password to config.
+        `addpeer`         Add peer to your config.
+        `outcon`          Add connection to outgoingConnections in config.
+        `allowcon`        Add connection to allowedConnections in config.
+        `admin`           Execute command in cjdns admin.
+        `dumptable`       Dump whole routing table.
+        `findnodes`       Prints new nodes in routing table.
+        `ping`            Ping node.
+        `help [cmd]`      display help for [cmd]
 
     Options:
 
-        -h, --help      output usage information
-        -V, --version   output the version number
+        `-h`, `--help`      output usage information
+        `-V`, `--version`   output the version number
 
 ## Todo ##
 
@@ -109,11 +109,15 @@ followed by:
 - [ ] config should be in ~/.config/cjdmaid.conf
 - [ ] write tests for lib/config.js
 
-## LICENSE ##
+## Credits ##
 
-The cjdmaid cjdns peer manager
+The **cjdmaid-homeconfig** fork is maintained by: Kevin MacMartin.
 
-    Copyright (C) 2013  noway421
+The **cjdmaid** cjdns peer manager is: Copyright (C) 2013  noway421
+
+## License ##
+
+### cjdmaid ###
 
     The cjdmaid program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
@@ -121,6 +125,6 @@ The cjdmaid cjdns peer manager
 
     You should have received a copy of the GNU General Public License along with this program. If not, see [GNU GENERAL PUBLIC LICENSE Version 3](https://www.gnu.org/licenses/gpl.html).
 
-Changes made in the *config@home* fork of *cjdmaid* are by Kevin MacMartin.
+### ascii art ###
 
 The image of the ASCII art maid in this document is licensed under the [![Creative Commons License](http://i.creativecommons.org/l/by-sa/3.0/80x15.png "Creative Commons License")](http://creativecommons.org/licenses/by-sa/3.0/deed.en_US).
