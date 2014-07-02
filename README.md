@@ -25,9 +25,9 @@
                                             ''
 ## Description ##
 
-A fork of the cjdns admin tool [cjdmaid](https://github.com/noway421/cjdmaid) that uses `~/.cjdmaid.conf` as its config file rather than `/etc/cjdmaid.conf`.
+A fork of the cjdns admin tool [cjdmaid](https://github.com/noway421/cjdmaid), using `~/.cjdmaid.conf` as its config file rather than `/etc/cjdmaid.conf`.
 
-This tool is able to simultaneously manage peers in your _cjdroute.conf_ and the active process using the cjdroute admin port.
+This tool is able to simultaneously manage peers in your **cjdroute.conf** and the active **cjdroute** process using the cjdroute admin port.
 
 ## Features ##
 
@@ -77,20 +77,20 @@ followed by:
 
     Commands:
 
-        `addpass`         Add authorized password to config.
-        `addpeer`         Add peer to your config.
-        `outcon`          Add connection to outgoingConnections in config.
-        `allowcon`        Add connection to allowedConnections in config.
-        `admin`           Execute command in cjdns admin.
-        `dumptable`       Dump whole routing table.
-        `findnodes`       Prints new nodes in routing table.
-        `ping`            Ping node.
-        `help [cmd]`      display help for [cmd]
+        addpass         Add authorized password to config.
+        addpeer         Add peer to your config.
+        outcon          Add connection to outgoingConnections in config.
+        allowcon        Add connection to allowedConnections in config.
+        admin           Execute command in cjdns admin.
+        dumptable       Dump whole routing table.
+        findnodes       Prints new nodes in routing table.
+        ping            Ping node.
+        help [cmd]      display help for [cmd]
 
     Options:
 
-        `-h`, `--help`      output usage information
-        `-V`, `--version`   output the version number
+        -h, --help      output usage information
+        -V, --version   output the version number
 
 ## Todo ##
 
@@ -113,7 +113,7 @@ followed by:
 
 The **cjdmaid-homeconfig** fork is maintained by: Kevin MacMartin.
 
-The **cjdmaid** cjdns peer manager is: Copyright (C) 2013  noway421
+The **cjdmaid** cjdns peer manager is: Copyright 2013 noway421
 
 ## License ##
 
